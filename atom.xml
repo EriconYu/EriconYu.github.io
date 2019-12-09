@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ericonyu.github.io/"/>
-  <updated>2019-11-22T15:19:06.185Z</updated>
+  <updated>2019-12-09T01:44:32.166Z</updated>
   <id>https://ericonyu.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jetbrain激活server</title>
+    <link href="https://ericonyu.github.io/2019/12/09/jetbrain%E6%BF%80%E6%B4%BBserver/"/>
+    <id>https://ericonyu.github.io/2019/12/09/jetbrain%E6%BF%80%E6%B4%BBserver/</id>
+    <published>2019-12-09T01:43:27.000Z</published>
+    <updated>2019-12-09T01:44:32.166Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://idea.iteblog.com/key.php" target="_blank" rel="noopener">http://idea.iteblog.com/key.php</a> </p><p>就这个，不好用再说吧~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;http://idea.iteblog.com/key.php&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://idea.iteblog.com/key.php&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;就这个，不好用再说吧~&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+    
+      <category term="奇技淫巧" scheme="https://EriconYu.github.io/tags/%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>OSX 批量CRLF 转 LF</title>
