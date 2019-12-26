@@ -1,78 +1,213 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta name="keywords" content="稀饭同学,程序员,算命,周易" />
-  <meta name="description" content="稀饭同学的个人博客" />
-  <meta http-equiv="x-dns-prefetch-control" content="on">
-  <link rel="dns-prefetch" href="https://busuanzi.ibruce.info">
-  <link rel="dns-prefetch" href="https://at.alicdn.com">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://program4.fun').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="原文 MQTT V3.1 Protocol Specification 译文（摘取一部分）MQTT根据QoS定义的等级来传输消息。等级描述如下： level 0：最多一次的传输消息是基于TCP&#x2F;IP网络传输的。没有回应，在协议中也没有定义重传的语义。消息可能到达服务器1次，也可能根本不会到达。对于client而言，有且仅发一次publish包，对于broker而言，有且仅发一次publish，简而">
+<meta name="keywords" content="MQTT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQTT QoS说明">
+<meta property="og:url" content="http:&#x2F;&#x2F;program4.fun&#x2F;2019&#x2F;12&#x2F;26&#x2F;MQTT-QoS%E8%AF%B4%E6%98%8E&#x2F;index.html">
+<meta property="og:site_name" content="稀饭同学">
+<meta property="og:description" content="原文 MQTT V3.1 Protocol Specification 译文（摘取一部分）MQTT根据QoS定义的等级来传输消息。等级描述如下： level 0：最多一次的传输消息是基于TCP&#x2F;IP网络传输的。没有回应，在协议中也没有定义重传的语义。消息可能到达服务器1次，也可能根本不会到达。对于client而言，有且仅发一次publish包，对于broker而言，有且仅发一次publish，简而">
+<meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2019-12-26T09:14:08.105Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://program4.fun/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>MQTT QoS说明 | 稀饭同学</title>
   
-  <link rel="dns-prefetch" href="https://widget.daovoice.io">
-  <link rel="dns-prefetch" href="https://widget-static-cdn.daovoice.io">
-  <link rel="dns-prefetch" href="https://im.daovoice.io">
-  
-  
-  <link rel="dns-prefetch" href="https://hm.baidu.com/">
-  
-  
-  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <link rel="dns-prefetch" href="https://api.github.com">
-  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
-  
-  <link rel="stylesheet" type="text/css" href="/./style/main.css">
-	<link rel="shortcut icon" href="/favicon.ico" title="Favicon">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-	<title>MQTT QoS说明</title>
-  
-  <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?awwssw1snsnsnn1ndndnndnd99j";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();
-  </script>
-  
-  
-    <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/123456.js","daovoice");daovoice('init',{app_id: "123456"});daovoice('update');
-  </script>
-  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 <link rel="alternate" href="/atom.xml" title="稀饭同学" type="application/atom+xml">
 </head>
-<body>
-  <canvas id="pattern-placeholder" height="230"></canvas>
-<div class="navbar-header">
-  <a class="blog-title" href="/">稀饭同学</a>
-  <a class="face-img" href="/">
-    <img src="https://tva3.sinaimg.cn/crop.0.0.200.200.180/005Kc3C1jw8f2uep0hhkvj305k05k3yk.jpg">
-  </a>
-</div>
-<main>
-  <div class="article-title">
-    
-  
-  <h1 class="title">
-    MQTT QoS说明
-  </h1>
-  
 
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-    <ul class="article-info">
-      <li>
-        发布
-        <time datetime="2019-12-26T09:11:00.000Z" itemprop="datePublished">2019-12-26</time>
-      </li>
-      <li>
-        
-    更新 <time datetime="2019-12-26T09:14:08.105Z" itemprop="dateUpdated">2019-12-26</time>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
 
-      </li>
-      <li id="busuanzi_container_page_pv">
-        阅读 <span id="busuanzi_value_page_pv"></span>
-      </li>
-    </ul>
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">稀饭同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">一个神棍程序员写字的地方</p>
   </div>
-  <div class="container">
-    <div class="article">
-      <div class="content">
-        
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://program4.fun/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="稀饭同学">
+      <meta itemprop="description" content="写写代码，算算卦">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="稀饭同学">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MQTT QoS说明
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-26 17:11:00 / Modified: 17:14:08" itemprop="dateCreated datePublished" datetime="2019-12-26T17:11:00+08:00">2019-12-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
         <p>原文</p>
 <p><a href="http://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html#qos-flows" target="_blank" rel="noopener">MQTT V3.1 Protocol Specification</a></p>
 <h1 id="译文（摘取一部分）"><a href="#译文（摘取一部分）" class="headerlink" title="译文（摘取一部分）"></a>译文（摘取一部分）</h1><p>MQTT根据QoS定义的等级来传输消息。等级描述如下：</p>
@@ -83,98 +218,188 @@
 <h2 id="level-2：-只有一次的传输"><a href="#level-2：-只有一次的传输" class="headerlink" title="level 2： 只有一次的传输"></a>level 2： 只有一次的传输</h2><p>在QoS level 1上附加的协议流保证了重复的消息不会传送到接收的应用。这是最高级别的传输，当重复的消息不被允许的情况下使用。这样增加了网络流量，但是它通常是可以接受的，因为消息内容很重要。</p>
 <p>QoS level 2在消息头有Message ID。</p>
 
-      </div>
-        <div class="support-author">
-          <p>感谢您的阅读。 🙏
-          <a href="https://program4.fun/index.html" target="_blank">关于转载请看这里</a>
-            <!--<a class="btn-pay"  href="#pay-modal">¥ 打赏支持</a>-->
-          </p>
-        </div>
-        <!--
-            <div class="like ">
-              <div class="like-button">
-                <a id="like-note" href="">
-                  <i class="icon-heart"></i>喜欢
-                </a>
-              </div>
-              <span id="likes-count">256</span>
-            </div>
-        -->
-        <div class="otherLink">
-          <div class="previous">
-          </div>
-          <div class="next">
-          </div>
-        </div>
-        <div class="comments" id="comments">
-          
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-  const gitalk = new Gitalk({
-    clientID: '8888a8888',
-    clientSecret: '8888886666666',
-    repo: 'xxxx.github.io',
-    owner: 'admin',
-    admin: ['admin'],
-    id: location.pathname,      // Ensure uniqueness and length less than 50
-    distractionFreeMode: false
-  })
+    </div>
 
-  gitalk.render('comments');
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MQTT/" rel="tag"># MQTT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/22/OSX-%E6%89%B9%E9%87%8FCRLF-%E8%BD%AC-LF/" rel="prev" title="OSX 批量CRLF 转 LF">
+      <i class="fa fa-chevron-left"></i> OSX 批量CRLF 转 LF
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
-
         </div>
-      </div>
-    </div>
-   </div>
-</main>
-<div class="footer">
-  <div class="info">
-    <p>
-    <a href="https://hexo.io" target="_blank" rel="noopener"> Hexo </a> 强力驱动 |
-      <a href="https://github.com/Youthink/hexo-themes-yearn" target="_blank" rel="noopener"> Yearn </a>
-      主题
-    </p>
-    <p>&copy;2013-2019 稀饭同学的博客 京ICP没备没号</p>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#译文（摘取一部分）"><span class="nav-number">1.</span> <span class="nav-text">译文（摘取一部分）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#level-0：最多一次的传输"><span class="nav-number">1.1.</span> <span class="nav-text">level 0：最多一次的传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-1：至少一次的传输"><span class="nav-number">1.2.</span> <span class="nav-text">level 1：至少一次的传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-2：-只有一次的传输"><span class="nav-number">1.3.</span> <span class="nav-text">level 2： 只有一次的传输</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">稀饭同学</p>
+  <div class="site-description" itemprop="description">写写代码，算算卦</div>
 </div>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
 
-<script>//console
-  var consoleConfig = '\n欢迎访问 https://program4.fun ，文明观看博客，别动不动就调试(づ｡◕‿‿◕｡)づ！\n'.split(',');
-  var canConsole = true;
-  var consoleInfo = (function(consoleConfig) {
-  if (!canConsole || !consoleConfig || consoleConfig.length < 1) {
-    return;
-  }
-  var consoleColor = '#6190e8';
-  var _console;
-  var backgroundTextStyle = 'padding: 1px 5px;color: #fff;background: ' + consoleColor + ';'
-  var textStyle = 'color: ' + consoleColor + ';';
 
-  consoleConfig.map(o => {
-    var num = (o.match(/%c/g) || []).length;
-    if(/^http(s)?:\/\//.test(o)) {
-      console.log('%c     ', 'background: url(' + o + ') no-repeat left center;font-size: 180px;');
-      return;
-    }
-    if (num > 0) {
-      var logArguments = [];
-      for (var i = 0; i < num; i++) {
-        if (i % 2 === 0) {
-          logArguments.push(backgroundTextStyle);
-        } else {
-          logArguments.push(textStyle);
-        }
-      }
-      (_console = console).log.apply(_console, ['%c' + o, textStyle].concat(logArguments));
-      return;
-    }
-    console.log('%c' + o, textStyle);
-  });
-}(consoleConfig));</script><script type="text/javascript" src="/./js/main.js"></script>
 
-  <script src="//at.alicdn.com/t/font_159214_mvtxvg9me9.js"></script>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">稀饭同学</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
