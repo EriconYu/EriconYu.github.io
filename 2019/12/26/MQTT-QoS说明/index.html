@@ -5,15 +5,17 @@
   
 
   
-  <title>tags | 稀饭同学</title>
+  <title>MQTT QoS说明 | 稀饭同学</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="神棍,周易,程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;index.html">
+  <meta name="description" content="原文 MQTT V3.1 Protocol Specification 译文（摘取一部分）MQTT根据QoS定义的等级来传输消息。等级描述如下： level 0：最多一次的传输消息是基于TCP&#x2F;IP网络传输的。没有回应，在协议中也没有定义重传的语义。消息可能到达服务器1次，也可能根本不会到达。对于client而言，有且仅发一次publish包，对于broker而言，有且仅发一次publish，简而">
+<meta name="keywords" content="MQTT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQTT QoS说明">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;26&#x2F;MQTT-QoS%E8%AF%B4%E6%98%8E&#x2F;index.html">
 <meta property="og:site_name" content="稀饭同学">
+<meta property="og:description" content="原文 MQTT V3.1 Protocol Specification 译文（摘取一部分）MQTT根据QoS定义的等级来传输消息。等级描述如下： level 0：最多一次的传输消息是基于TCP&#x2F;IP网络传输的。没有回应，在协议中也没有定义重传的语义。消息可能到达服务器1次，也可能根本不会到达。对于client而言，有且仅发一次publish包，对于broker而言，有且仅发一次publish，简而">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-22T16:13:30.265Z">
+<meta property="og:updated_time" content="2019-12-26T09:14:08.105Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="稀饭同学" type="application/atom+xml">
@@ -65,10 +67,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-MQTT-QoS说明" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/tags/index.html" class="article-date">
-  <time datetime="2019-11-22T16:13:30.000Z" itemprop="datePublished">2019-11-23</time>
+    <a href="/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/" class="article-date">
+  <time datetime="2019-12-26T09:11:00.000Z" itemprop="datePublished">2019-12-26</time>
 </a>
     
   </div>
@@ -79,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      MQTT QoS说明
     </h1>
   
 
@@ -87,17 +89,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>原文</p>
+<p><a href="http://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html#qos-flows" target="_blank" rel="noopener">MQTT V3.1 Protocol Specification</a></p>
+<h1 id="译文（摘取一部分）"><a href="#译文（摘取一部分）" class="headerlink" title="译文（摘取一部分）"></a>译文（摘取一部分）</h1><p>MQTT根据QoS定义的等级来传输消息。等级描述如下：</p>
+<h2 id="level-0：最多一次的传输"><a href="#level-0：最多一次的传输" class="headerlink" title="level 0：最多一次的传输"></a>level 0：最多一次的传输</h2><p>消息是基于TCP/IP网络传输的。没有回应，在协议中也没有定义重传的语义。消息可能到达服务器1次，也可能根本不会到达。对于client而言，有且仅发一次publish包，对于broker而言，有且仅发一次publish，<strong>简而言之，就是仅发一次包，是否收到完全不管，适合那些不是很重要的数据</strong>。</p>
+<h2 id="level-1：至少一次的传输"><a href="#level-1：至少一次的传输" class="headerlink" title="level 1：至少一次的传输"></a>level 1：至少一次的传输</h2><p>服务器接收到消息会被确认，通过传输一个PUBACK信息。如果有一个可以辨认的传输失败，无论是通讯连接还是发送设备，还是过了一段时间确认信息没有收到，发送方都会将消息头的DUP位置1，然后再次发送消息。消息最少一次到达服务器。SUBSCRIBE和UNSUBSCRIBE都使用level 1 的QoS。</p>
+<p>如果客户端没有接收到PUBACK信息（无论是应用定义的超时，还是检测到失败然后通讯session重启），客户端都会再次发送PUBLISH信息，并且将DUP位置1。</p>
+<p>当它从客户端接收到重复的数据，服务器重新发送消息给订阅者，并且发送另一个PUBACK消息。</p>
+<h2 id="level-2：-只有一次的传输"><a href="#level-2：-只有一次的传输" class="headerlink" title="level 2： 只有一次的传输"></a>level 2： 只有一次的传输</h2><p>在QoS level 1上附加的协议流保证了重复的消息不会传送到接收的应用。这是最高级别的传输，当重复的消息不被允许的情况下使用。这样增加了网络流量，但是它通常是可以接受的，因为消息内容很重要。</p>
+<p>QoS level 2在消息头有Message ID。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/tags/index.html" data-id="ck4mj1bjt0008o39y74k58pcx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/" data-id="ck4mj1bj80000o39y40k8bhev" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MQTT/" rel="tag">MQTT</a></li></ul>
+
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/22/OSX-%E6%89%B9%E9%87%8FCRLF-%E8%BD%AC-LF/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OSX 批量CRLF 转 LF</div>
+    </a>
+  
+</nav>
+
   
 </article>
 
