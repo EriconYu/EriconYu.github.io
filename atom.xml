@@ -5,9 +5,9 @@
   <subtitle>一个神棍程序员写字的地方</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://program4.fun/"/>
   <updated>2019-12-26T09:14:08.105Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://program4.fun/</id>
   
   <author>
     <name>John Doe</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>MQTT QoS说明</title>
-    <link href="http://yoursite.com/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/"/>
-    <id>http://yoursite.com/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/</id>
+    <link href="http://program4.fun/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/"/>
+    <id>http://program4.fun/2019/12/26/MQTT-QoS%E8%AF%B4%E6%98%8E/</id>
     <published>2019-12-26T09:11:00.000Z</published>
     <updated>2019-12-26T09:14:08.105Z</updated>
     
@@ -37,14 +37,14 @@
     
     
     
-      <category term="MQTT" scheme="http://yoursite.com/tags/MQTT/"/>
+      <category term="MQTT" scheme="http://program4.fun/tags/MQTT/"/>
     
   </entry>
   
   <entry>
     <title>OSX 批量CRLF 转 LF</title>
-    <link href="http://yoursite.com/2019/11/22/OSX-%E6%89%B9%E9%87%8FCRLF-%E8%BD%AC-LF/"/>
-    <id>http://yoursite.com/2019/11/22/OSX-%E6%89%B9%E9%87%8FCRLF-%E8%BD%AC-LF/</id>
+    <link href="http://program4.fun/2019/11/22/OSX-%E6%89%B9%E9%87%8FCRLF-%E8%BD%AC-LF/"/>
+    <id>http://program4.fun/2019/11/22/OSX-%E6%89%B9%E9%87%8FCRLF-%E8%BD%AC-LF/</id>
     <published>2019-11-22T15:13:00.000Z</published>
     <updated>2019-11-22T15:19:06.185Z</updated>
     
@@ -63,19 +63,19 @@
     </summary>
     
     
-      <category term="奇技淫巧" scheme="http://yoursite.com/categories/%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/"/>
+      <category term="奇技淫巧" scheme="http://program4.fun/categories/%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/"/>
     
     
-      <category term="OSX" scheme="http://yoursite.com/tags/OSX/"/>
+      <category term="OSX" scheme="http://program4.fun/tags/OSX/"/>
     
-      <category term="dos2unix" scheme="http://yoursite.com/tags/dos2unix/"/>
+      <category term="dos2unix" scheme="http://program4.fun/tags/dos2unix/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2019/11/22/hello-world/"/>
-    <id>http://yoursite.com/2019/11/22/hello-world/</id>
+    <link href="http://program4.fun/2019/11/22/hello-world/"/>
+    <id>http://program4.fun/2019/11/22/hello-world/</id>
     <published>2019-11-22T06:20:40.219Z</published>
     <updated>2019-11-22T17:06:59.001Z</updated>
     
